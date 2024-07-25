@@ -42,16 +42,13 @@ def step_impl(context):
     except Exception as e:
         print(f"Failed to click on the last row: {e}")
     
-    """last_row = rows[-1]
-    
-    inner_table = last_row.find_element(By.XPATH, "//td[2]/table")
-    inner_table.click()"""
-    
 @when('Comment the product')
 def step_impl(context):
     # Star the product
-    last_star = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/div[1]/div/svg[5]")
-    last_star.click()
+    stars = context.driver.find_elements(By.CLASS_NAME, "star")
+    last_star = stars[-1] 
+    actions = ActionChains(context.driver)
+    actions.move_to_element(last_star).click().perform()
     # Fill the comment field
     comment = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/div[2]/textarea")
     comment.send_keys("Excelente producto")
