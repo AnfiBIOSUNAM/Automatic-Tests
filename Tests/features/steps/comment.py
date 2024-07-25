@@ -52,7 +52,7 @@ def step_impl(context):
     actions.move_to_element(last_star).click().perform()
     # Fill the comment field
     comment = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/div[2]/textarea")
-    comment.send_keys("Muy ricas")
+    comment.send_keys(context.config.get('Comment', 'comment'))
     # Click on the comment button
     context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/button").click()
     
@@ -68,7 +68,10 @@ def step_impl(context):
             print("The product was clicked successfully.")
         except Exception as e:
             print(f"Failed to click on the last row: {e}")
-        
+        # Check if the comment is there
+        comment_section = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section[2]/div/div[1]")
+        comment_searched = comment_section.find_element(By.XPATH, f"//p[text() = '{context.config.get('Comment', 'comment')}']")
+        assert comment_searched
     else:
         print("The product has been sold out")
         pass
