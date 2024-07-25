@@ -23,6 +23,7 @@ def step_impl(context):
     
 @when('Select the quantity and add to cart')
 def step_impl(context):
+    context.product_name = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section[1]/div/div/div[2]/h1").text
     # Add 2 products
     context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section[1]/div/div/div[2]/div[3]/button[2]").click()
     # Add to the cart
@@ -36,6 +37,6 @@ def step_impl(context):
     cart_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div[1]/nav/div/div/div/li")))
     cart_button.click()
     # Check if there is an h5 with the text "Café"
-    h5 = context.driver.find_element(By.XPATH, "//h5[text()='Café']")
+    h5 = context.driver.find_element(By.XPATH, f"//h5[text()='{context.product_name}']")
     assert h5
     
