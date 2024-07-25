@@ -39,18 +39,22 @@ def step_impl(context):
 
 @then(u'llenar los datos y enviarlos')
 def step_impl(context):
-    correo = context.driver.find_element(By.ID, "correo")
+    correo = WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located((By.ID, "correo"))
+    )
     correo.click()
     correo.send_keys("disneyplusdeal@gmail.com")
     
-    
-    password= context.driver.find_element(By.ID, "contraseña")
+    password = WebDriverWait(context.driver, 10).until(
+        EC.presence_of_element_located((By.ID, "contraseña"))
+    )
     password.click()
     password.send_keys("123")
-   
-    
-    button= context.driver.find_element(By.CSS_SELECTOR, 'button.btn.btn-azul.mt-5[type="submit"]')
+
+    button = WebDriverWait(context.driver, 10).until(
+        EC.element_to_be_clickable((By.CSS_SELECTOR, 'button.btn.btn-azul.mt-5[type="submit"]'))
+    )
     context.driver.execute_script("arguments[0].scrollIntoView(true);", button)
-    button.click()
+    context.driver.execute_script("arguments[0].click();", button)
     
 
