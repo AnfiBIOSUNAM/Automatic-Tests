@@ -4,7 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import time
 """Feature: In the Website Prometienda add two products to the cart
     Scenario: Add to cart
     Given Open the Website
@@ -18,7 +18,7 @@ def step_impl(context):
 @when('Go to the details of a product')
 def step_impl(context):
     # Get to the product details
-    card = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[1]/div/div[1]/img")
+    card = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[1]/div/div[1]")
     card.click()
     
 @when('Select the quantity and add to cart')
@@ -30,8 +30,11 @@ def step_impl(context):
     
 @then('Check if the product is in the cart')
 def step_impl(context):
+    wait = WebDriverWait(context.driver, 10)
+    time.sleep(5)
     # Go to the cart
-    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/nav/div/div/div/li/a").click()
+    cart_button = wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div/div[1]/nav/div/div/div/li")))
+    cart_button.click()
     # Check if there is an h5 with the text "Café"
     h5 = context.driver.find_element(By.XPATH, "//h5[text()='Café']")
     assert h5
