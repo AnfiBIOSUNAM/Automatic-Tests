@@ -16,7 +16,7 @@ import time
     
 @given('We are in the website')
 def step_impl(context):
-    context.driver.get(context.config.get('URL', 'url'))
+    context.driver.get(context.config.get('URL', 'link'))
     
 @when('Go to my shopping')
 def step_impl(context):

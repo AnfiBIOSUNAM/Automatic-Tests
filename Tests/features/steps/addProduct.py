@@ -13,7 +13,7 @@ import time
     
 @given('Open the Website')
 def step_impl(context):
-    context.driver.get(context.config.get('URL', 'url'))
+    context.driver.get(context.config.get('URL', 'link'))
     
 @when('Go to the details of a product')
 def step_impl(context):
