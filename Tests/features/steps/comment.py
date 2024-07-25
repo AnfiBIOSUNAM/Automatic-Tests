@@ -20,21 +20,43 @@ def step_impl(context):
     
 @when('Go to my shopping')
 def step_impl(context):
-    # Click on the login button
-    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/nav/div/div/ul/div/li[3]/a").click()
+    # Click on my profile button
+    profile = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/nav/div/div/div/div/a/img")
+    profile.click()
+    # Click on my shopping
+    my_shopping = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/nav/div/div/div/div/div/a[2]")
+    my_shopping.click()
     
 @when('Select the last element bought')
 def step_impl(context):
     # Click on the last element bought
-    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[1]/div/div[1]").click()
+    table = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/div[3]/div/table")
+    rows = table.find_elements(By.TAG_NAME, "tr")
+    assert len(rows) > 0, "The table is empty"
+    
+    last_product = rows[-1] # Get the las product, which is the last row
+    
+    try: # Click on the last row
+        context.driver.execute_script("arguments[0].click();", last_product)
+        print("Last row was clicked successfully.")
+    except Exception as e:
+        print(f"Failed to click on the last row: {e}")
+    
+    """last_row = rows[-1]
+    
+    inner_table = last_row.find_element(By.XPATH, "//td[2]/table")
+    inner_table.click()"""
     
 @when('Comment the product')
 def step_impl(context):
+    # Star the product
+    last_star = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/div[1]/div/svg[5]")
+    last_star.click()
     # Fill the comment field
-    comment = context.driver.find_element(By.ID, "comentario")
+    comment = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/div[2]/textarea")
     comment.send_keys("Excelente producto")
     # Click on the comment button
-    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/form/button").click()
+    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[2]/button").click()
     
 @then('Check if the product is commented')
 def step_impl(context):
