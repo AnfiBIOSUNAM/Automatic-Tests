@@ -17,11 +17,22 @@ def step_impl(context):
     
 @when('Go to the details of a product')
 def step_impl(context):
-    pass
-    #context.driver.find_element(By.XPATH, "//a[contains(text(),'Vestido de Noche')]").click()
+    # Get to the product details
+    card = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section/div/div/div[1]/div/div[1]/img")
+    card.click()
     
-@then('Select the quantity and add to cart')
+@when('Select the quantity and add to cart')
 def step_impl(context):
-    pass
-    #context.driver.find_element(By.ID, "quantity
+    # Add 2 products
+    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section[1]/div/div/div[2]/div[3]/button[2]").click()
+    # Add to the cart
+    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/section[1]/div/div/div[2]/div[3]/button[3]").click()
+    
+@then('Check if the product is in the cart')
+def step_impl(context):
+    # Go to the cart
+    context.driver.find_element(By.XPATH, "/html/body/div/div[1]/nav/div/div/div/li/a").click()
+    # Check if there is an h5 with the text "Café"
+    h5 = context.driver.find_element(By.XPATH, "//h5[text()='Café']")
+    assert h5
     
