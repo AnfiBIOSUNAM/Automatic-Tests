@@ -32,7 +32,7 @@ def step_impl(context):
     # Click on the last element bought
     table = context.driver.find_element(By.XPATH, "/html/body/div/div[1]/main/div[3]/div/table")
     rows = table.find_elements(By.TAG_NAME, "tr")
-    assert len(rows) > 0, "The table is empty"
+    assert len(rows) > 1, "The table is empty"
     
     last_product = rows[-1] # Get the las product, which is the last row
     
