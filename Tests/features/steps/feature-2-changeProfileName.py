@@ -35,4 +35,4 @@ def step_impl(context):
     wait = WebDriverWait(context.driver, 10)
     profile_name = wait.until(EC.text_to_be_present_in_element((By.XPATH, '/html/body/div/div[1]/main/div/div[2]/span'), 'Anonimo'))
     assert profile_name, f'Esperado "Anonimo", pero se encontró "{profile_name}"'
-    context.driver.quit()
+    
