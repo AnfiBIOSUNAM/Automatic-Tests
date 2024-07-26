@@ -6,7 +6,7 @@ from selenium.common.exceptions import TimeoutException, ElementClickIntercepted
 
 @given('estoy logueado en la pagina')
 def step_impl(context):
-    pass
+    context.driver.get(context.config.get('URL', 'link'))  # Cambia esto por la URL real
 
 @when('busco el producto "{producto}"')
 def step_impl(context, producto):

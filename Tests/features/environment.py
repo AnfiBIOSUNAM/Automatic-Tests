@@ -17,7 +17,7 @@ def before_all(context):
     width = context.config.getint("Browser", "width")
     height = context.config.getint("Browser", "height")
     context.driver.set_window_size(width, height)
-    context.driver.implicitly_wait(5)
+    context.driver.implicitly_wait(10)
 
 def after_all(context):
     time.sleep(5)
